@@ -1,4 +1,5 @@
 <template>
+  <addTodo @add-todo="addItem" />
   <todoItems
     v-for="todo in todos"
     v-bind:key="todo"
@@ -10,23 +11,25 @@
 
 <script>
 import { ref } from 'vue'
+import { v4 as uuidv4 } from 'uuid'
+import addTodo from './addTodo.vue'
 import todoItems from './TodoItems.vue'
 export default {
-  components: { todoItems },
+  components: { todoItems, addTodo },
   setup() {
     const todos = ref([
       {
-        id: 1,
+        id: uuidv4(),
         title: 'Viec 1',
         completed: true,
       },
       {
-        id: 2,
+        id: uuidv4(),
         title: 'Viec 2',
         completed: false,
       },
       {
-        id: 3,
+        id: uuidv4(),
         title: 'Viec 3',
         completed: false,
       },
@@ -46,10 +49,15 @@ export default {
       })
     }
 
+    const addItem = newItem => {
+      todos.value.push(newItem)
+    }
+
     return {
       todos,
       markCompleted,
       deleteItem,
+      addItem,
     }
   },
 }
