@@ -1,15 +1,33 @@
 <template>
   <p :class="('todoItems', todoProps.completed ? 'is-completed' : '')">
-    <input type="checkbox" :checked="todoProps.completed" />
+    <input
+      type="checkbox"
+      :checked="todoProps.completed"
+      @change="markItemcompleted"
+    />
     {{ todoProps.title }}
-    <button class="del-btn">Delete</button>
+    <button class="del-btn" @click="deleteTodo">Delete</button>
   </p>
 </template>
 
 <script>
 export default {
-  props: ["todoProps"],
-};
+  props: ['todoProps'],
+  setup(props, context) {
+    const markItemcompleted = () => {
+      context.emit('item-completed', props.todoProps.id)
+      // console.log(props.todoProps.id)
+    }
+
+    const deleteTodo = id => {
+      context.emit('item-delete', props.todoProps.id)
+    }
+    return {
+      markItemcompleted,
+      deleteTodo,
+    }
+  },
+}
 </script>
 
 <style>
