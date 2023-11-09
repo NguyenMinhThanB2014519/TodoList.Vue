@@ -12,7 +12,7 @@ export default {
       {
         id: 1,
         title: "Viec 1",
-        completed: false,
+        completed: true,
       },
       {
         id: 2,
